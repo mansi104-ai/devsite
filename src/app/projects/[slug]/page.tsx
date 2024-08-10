@@ -1,4 +1,4 @@
-import { getPost } from "@/data/blog";
+import { getProject } from "@/data/projects";
 import { DATA } from "@/data/resume";
 import { formatDate } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -12,7 +12,7 @@ export async function generateMetadata({
     slug: string;
   };
 }): Promise<Metadata | undefined> {
-  let post = await getPost(params.slug);
+  let post = await getProject(params.slug);
 
   let {
     title,
@@ -53,7 +53,7 @@ export default async function Blog({
     slug: string;
   };
 }) {
-  let post = await getPost(params.slug);
+  let post = await getProject(params.slug);
 
   if (!post) {
     notFound();
