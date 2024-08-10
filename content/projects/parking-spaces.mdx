@@ -1,0 +1,179 @@
+---
+title: Parking Spaces
+publishedAt: "2023-10-23"
+summary: "Detection of parking spaces in a parking lot using OpenCV and Python."
+---
+
+Detecting Empty Parking Spaces Using Computer Vision
+
+## Method 1: Histogram of Oriented Gradients (HOG)
+
+- Feature extraction technique used for computer vision and image processing tasks
+- Detects objects or patterns within images by capturing information about the distribution of local gradients
+- Steps:
+  1. Gradient computation
+  2. Image cell division
+  3. Histogram calculation
+  4. Block normalization
+  5. Descriptor formation
+  6. Training and detection
+
+### Example Code for HOG Feature Extraction
+
+```python
+import cv2
+from skimage.feature import hog
+from skimage import exposure
+
+# Load the image
+image = cv2.imread('input_image.jpg')
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Compute HOG features and visualize them
+features, hog_image = hog(gray, visualize=True)
+
+# Rescale the HOG image
+hog_image_rescaled = exposure.rescale_intensity(hog_image, in_range=(0, 10))
+
+# Display the original and HOG image
+cv2.imshow('Original Image', image)
+cv2.imshow('HOG Image', hog_image_rescaled)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
+## Method 2: Convolutional Neural Network (CNN)
+
+ - Train a CNN object detector and slide it over the image to find all cars
+ - Accurate but not efficient as it scans the same image multiple times
+ - Can easily find cars rotated in different orientations
+ - Requires a lot more training data than a HOG-based object detector
+
+### Example Code for CNN Object Detection
+
+```python 
+import tensorflow as tf
+
+# Load a pre-trained CNN model (e.g., MobileNet)
+model = tf.keras.applications.MobileNetV2(weights='imagenet')
+
+# Load and preprocess the input image
+input_image = cv2.imread('input_image.jpg')
+input_image = cv2.resize(input_image, (224, 224))
+input_image = tf.keras.applications.mobilenet_v2.preprocess_input(input_image)
+input_tensor = tf.convert_to_tensor(input_image)
+input_tensor = tf.expand_dims(input_tensor, axis=0)
+
+# Run inference
+predictions = model.predict(input_tensor)
+```
+
+## Method 3: Newer Deep Learning Approaches
+
+ - Mask R-CNN, Faster R-CNN, or YOLO
+ - Combines the accuracy of CNNs with efficiency tricks
+ - Runs relatively fast on a GPU if there is enough training data
+
+### Example Code for Object Detection with YOLO
+
+```python
+import cv2
+import numpy as np
+
+# Load YOLO
+net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
+layer_names = net.getLayerNames()
+output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
+
+# Load the image
+image = cv2.imread('input_image.jpg')
+height, width, _ = image.shape
+
+# Prepare the image for YOLO
+blob = cv2.dnn.blobFromImage(image, 0.00392, (416, 416), (0, 0, 0), True, crop=False)
+net.setInput(blob)
+outs = net.forward(output_layers)
+
+# Process the detections
+for out in outs:
+    for detection in out:
+        scores = detection[5:]
+        class_id = np.argmax(scores)
+        confidence = scores[class_id]
+        if confidence > 0.5:
+            # Object detected
+            center_x = int(detection * width)
+            center_y = int(detection * height)
+            w = int(detection * width)
+            h = int(detection * height)
+            # Draw bounding box
+            cv2.rectangle(image, (center_x, center_y), (center_x + w, center_y + h), (0, 255, 0), 2)
+
+# Show the output
+cv2.imshow("Image", image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+
+## Detecting Empty Parking Spaces
+
+- Use Intersection Over Union (IoU) to measure overlap between objects
+- IoU calculated by finding the amount of pixels where two objects overlap and dividing it by the amount of pixels covered by both objects
+- Object detection may not always work perfectly with live video
+- To prevent incorrect detection, ensure a parking space remains free for several sequential frames of video
+
+### Example Code for IoU Calculation
+
+```python
+def calculate_iou(boxA, boxB):
+    # Determine the coordinates of the intersection rectangle
+    xA = max(boxA, boxB)
+    yA = max(boxA, boxB)
+    xB = min(boxA, boxB)
+    yB = min(boxA, boxB)
+
+    # Compute the area of intersection rectangle
+    interArea = max(0, xB - xA) * max(0, yB - yA)
+
+    # Compute the area of both the prediction and ground-truth rectangles
+    boxAArea = (boxA - boxA) * (boxA - boxA)
+    boxBArea = (boxB - boxB) * (boxB - boxB)
+
+    # Compute the intersection over union by taking the intersection area and dividing it by the sum of prediction + ground-truth areas - the intersection area
+    iou = interArea / float(boxAArea + boxBArea - interArea)
+
+    return iou
+```
+
+## Sending a Text
+
+ - Use Twilio to send SMS alerts when a parking space is free for several frames
+ - Sign up for a Twilio trial account, create a phone number, and get account credentials
+ - Install the Twilio Python client library:
+
+```bash
+pip3 install twilio
+```
+
+### Example Code for Sending SMS with Twilio
+
+```python
+from twilio.rest import Client
+
+# Your Twilio credentials
+account_sid = 'your_account_sid'
+auth_token = 'your_auth_token'
+client = Client(account_sid, auth_token)
+
+# Send SMS
+message = client.messages.create(
+    body="A parking space is now available!",
+    from_='+1234567890',  # Your Twilio phone number
+    to='+0987654321'       # Your phone number
+)
+
+print(f"Message sent: {message.sid}")
+```
+
+### GitHub Code Link
+ - [Parking Spaces OpenCV GitHub Repository](https://github.com/mansi104-ai/parking_spaces-opencv-)
