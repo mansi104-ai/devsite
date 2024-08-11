@@ -1,0 +1,38 @@
+---
+title: Amburoute
+publishedAt: "2023-10-27"
+summary: "Making route-mapping for ambulance drivers easier using Google Map's APIs , customized using ML models integrated into a mobile application."
+---
+
+This project involves several Python scripts, each serving a unique purpose:
+
+- **`train.py`**: Responsible for training the model using provided data.
+- **`predict.py`**: Used for making predictions based on the trained model.
+- **`map.py`**: Contains functions for converting geographical coordinates.
+- **`location.py`**: Manages location data and file reading.
+- **`draw.py`**: (Not detailed in the provided code but likely for visualizing results).
+
+## Training the Model
+
+The training process involves reading city data, transforming it into a suitable format, and fitting a logistic regression model. Here’s a breakdown of the `train.py` script:
+
+- **Data Preparation**: The `get_city_set` function extracts unique city names from the input data.
+- **Mapping Cities**: The `read_file` function creates a mapping of city names to integer labels.
+- **Model Training**: The `Trainer` class handles the training process, where the model is fitted to the transformed data.
+
+### Example Code for Training
+
+```python
+from sklearn.externals import joblib
+from sklearn.linear_model import LogisticRegression
+
+class Trainer(object):
+    def __init__(self, map, binary):
+        self.map = map
+        self.binary = binary
+
+    def train(self, data):
+        x, y = self.__transform(data)
+        model = LogisticRegression(multi_class='multinomial', solver='saga')
+        model.fit(x, y)
+        return model
