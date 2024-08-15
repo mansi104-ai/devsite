@@ -159,7 +159,92 @@ export const DATA = {
   ],
   hackathons: [
     {
-      title: "Flipkart Grid-4 Robotics",
+      title: "Google Maps Hack2Skill",
+      dates: "October, 2023",
+      location: "India",
+      description:
+        "The Amburoute project is a route optimization web application built using Flask for the backend, HTML/CSS for the frontend, and integrated with Google Maps API for real-time data. It allows users to efficiently plan journeys by calculating optimal routes based on various parameters for Ambulance drivers,reducing upto 20 min/trip.",
+      image: "/ggle.png",
+      win: "Rank #3",
+      links: [
+        {
+          title: "Blog",
+          icon: <Icons.globe className="h-4 w-4" />,
+          href: "https://docs.google.com/presentation/d/1ZTrXjLjmY17FRtEVmNSRmhjeo-oie3P3qBXKFXLdedU/edit#slide=id.g23eaab1d1ce_0_1",
+        },
+        {
+          title: "Code",
+          icon: <Icons.github className="h-4 w-4" />,
+          href: "https://github.com/mansi104-ai/Amburoute",
+        },
+      ],
+    },
+    {
+      title: "Smart India Hackathon",
+      dates: "October, 2023",
+      location: "India",
+      description:
+        "Engineered real-time video feed analysis and vehicle detection using OpenCV. Implemented TensorFlow-based machine learning for parking space counting, reducing parking search time by 40%. Achieved accurate prediction of 85% parking availability, displayed through a bird's-eye-view camera.",
+      image: "/sih.png",
+      win: "Rank #3",
+      links: [
+        {
+          title: "Blog",
+          icon: <Icons.globe className="h-4 w-4" />,
+          href: "https://github.com/ZeroDevInc",
+        },
+        {
+          title: "Code",
+          icon: <Icons.github className="h-4 w-4" />,
+          href: "https://github.com/ZeroDevInc",
+        },
+      ],
+    },
+    {
+      title: "Flipkart Grid-5.0 Health",
+      dates: "September, 2023",
+      location: "India",
+      description:
+        "The project uses the power of LLMs to provide personalized fashion recommendations. It features a user-friendly web interface, built using ",
+      image: "/fgrid.png",
+      win: "Rank #3",
+      links: [
+        // {
+        //   title: "Blog",
+        //   icon: <Icons.globe className="h-4 w-4" />,
+        //   href: "https://github.com/mansi104-ai/Vogue_genie/tree/main",
+        // },
+        {
+          title: "Code",
+          icon: <Icons.github className="h-4 w-4" />,
+          href: "https://github.com/mansi104-ai/Vogue_genie/tree/main",
+        },
+      ],
+    },
+    {
+      title: "Ideathon",
+      dates: "August, 2023",
+      location: "Punjab Engineering College,Chandigarh, India",
+      description:
+        "Developed a Flutter application that provides an interactive platform for college students to showcase their technical and non-technical achievements. The application features a dynamic frontend and is supported by a Firebase-hosted backend server, ensuring seamless integration and user experience",
+      image: "/ideath.png",
+      win: "Rank #3",
+      links: [
+        {
+          title: "Website",
+          icon: <Icons.globe className="h-4 w-4" />,
+          href: "https://titans-karma.vercel.app/",
+        },
+        {
+          title: "Code",
+          icon: <Icons.github className="h-4 w-4" />,
+          href: "https://github.com/mansi104-ai/titans_karma",
+        },
+      ],
+    },
+    
+    {
+      title: "Flipkart Grid-4.0 Robotics",
       dates: "December, 2022",
       location: "Indian Institute of Technology, Madras, India",
       description:
