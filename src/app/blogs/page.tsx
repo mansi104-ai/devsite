@@ -7,7 +7,7 @@ export const metadata = {
   description: "My thoughts on software development, life, and more.",
 };
 
-const BLUR_FADE_DELAY = 0.04;
+const BLUR_FADE_DELAY = 0.05;
 
 export default async function BlogPage() {
   const posts = await getBlogPosts();
@@ -39,6 +39,10 @@ export default async function BlogPage() {
                 </p>
               </div>
             </Link>
+            {/* Set OG image dynamically */}
+            <meta property="og:image" content={post.metadata.ogImage} />
+            <meta property="og:image:width" content="1200" />
+            <meta property="og:image:height" content="630" />
           </BlurFade>
         ))}
     </section>
