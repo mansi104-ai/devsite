@@ -96,7 +96,7 @@ Just take a look at the number of trainable params from the above data and we'll
 
 ## What we infer?
 
-In general, having more trainable parameters suggests that a model might perform better. However, in this case, the CNN achieves higher accuracy despite having fewer trainable parameters than the basic neural network. 
+**1. Capturing Local Patterns**: In general, having more trainable parameters suggests that a model might perform better. However, in this case, the CNN achieves higher accuracy despite having fewer trainable parameters than the basic neural network. 
 This is because CNNs have properties that allow them to provide higher accuracy, especially in tasks involving images. One of the key reasons is that CNNs can capture more **local relationships** in the data.
 This is crucial for image data, where features like edges, textures, and shapes are key to understanding the overall content of the image.
 
@@ -104,14 +104,14 @@ This is crucial for image data, where features like edges, textures, and shapes 
 - > **MaxPool2D** says, from all the available data patterns, I will get you the important ones.They reduce the spatial dimensions of the data, focusing on the most relevant features,
  thereby enhancing the model’s ability to generalize.
 
-For example, if you're working on an image dataset to build a classifier for apples and mangoes, a neural network tends to learn the patterns in the images—the more, 
+**2. Parameter Efficiency** :For example, if you're working on an image dataset to build a classifier for apples and mangoes, a neural network tends to learn the patterns in the images—the more, 
 the better—until it starts to memorize the data, leading to overfitting.
 
 On the other hand, a CNN observes the shapes and colors in the images. It learns that a fruit with a certain shape and shades of red is likely to be an apple. This leads us to another conclusion:
 
 > **CNNs are more likely to avoid overfitting of the data.**
 
-When you close one of your eye, you see the window in front of you slightly shifted.
+**3. Translation Invariance** :When you close one of your eye, you see the window in front of you slightly shifted.
 But when the machine sees the apple in a position elsewhere (maybe at a distance or on a tree in the image),
 it fails to recognize it .
 
