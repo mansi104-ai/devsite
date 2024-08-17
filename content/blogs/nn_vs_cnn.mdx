@@ -90,12 +90,16 @@ Model: "sequential_2"
  - Optimizer params: 62,204 
  - Accuracy: 0.8102
 
-The above are sample model summaries for an image dataset model made using VGG Architecture.
+The above are sample model summaries for an image dataset model made using VGG Architecture.<br>
 Just take a look at the number of trainable params from the above data and we'll see what we can infer from them.
+> **Trainable Parameters** : The components that the learning algorithm optimizes through techniques like gradient descent, enabling the model to improve its accuracy and generalization capabilities.<br>
+
+
 
 
 ## What we infer?
 
+### **1. <u>Capturing Local Patterns</u>** 
 In general, having more trainable parameters suggests that a model might perform better. However, in this case, the CNN achieves higher accuracy despite having fewer trainable parameters than the basic neural network. 
 This is because CNNs have properties that allow them to provide higher accuracy, especially in tasks involving images. One of the key reasons is that CNNs can capture more **local relationships** in the data.
 This is crucial for image data, where features like edges, textures, and shapes are key to understanding the overall content of the image.
@@ -104,13 +108,15 @@ This is crucial for image data, where features like edges, textures, and shapes 
 - > **MaxPool2D** says, from all the available data patterns, I will get you the important ones.They reduce the spatial dimensions of the data, focusing on the most relevant features,
  thereby enhancing the model’s ability to generalize.
 
+### **2. <u>Parameter Efficiency</u>** 
 For example, if you're working on an image dataset to build a classifier for apples and mangoes, a neural network tends to learn the patterns in the images—the more, 
 the better—until it starts to memorize the data, leading to overfitting.
 
 On the other hand, a CNN observes the shapes and colors in the images. It learns that a fruit with a certain shape and shades of red is likely to be an apple. This leads us to another conclusion:
 
-> CNNs are more likely to avoid overfitting of the data.
+> **CNNs are more likely to avoid overfitting of the data.**
 
+### **3. Translation Invariance**</u> 
 When you close one of your eye, you see the window in front of you slightly shifted.
 But when the machine sees the apple in a position elsewhere (maybe at a distance or on a tree in the image),
 it fails to recognize it .
@@ -119,7 +125,7 @@ This is called translation invariance.A major advantage of CNNs is their ability
 This means that they can recognize objects even if they appear in different locations within the image.
 For example, whether an apple is in the center or the corner of an image, a CNN can still identify it correctly, whereas a traditional neural network might struggle.
 
-> Due to the nature of convolutional layers and pooling operations, CNNs can recognize objects regardless of their position in the image.
+> **Due to the nature of convolutional layers and pooling operations, CNNs can recognize objects regardless of their position in the image.**
 
 ## Conclusion
 Convolutional Neural Networks (CNNs) are powerful tools that outperform traditional neural networks, particularly when dealing with image data.
