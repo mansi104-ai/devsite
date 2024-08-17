@@ -1,0 +1,132 @@
+---
+title: Convolutional Neural Networks vs Regular Neural Networks
+publishedAt: "2024-08-17"
+summary: "Exploring the strengths of Convolutional Neural Networks (CNNs) over traditional neural networks"
+---
+
+## Understanding Neural Networks vs. Convolutional Neural Networks
+
+Before diving into the need for data augmentation, let's explore a basic neural network and a Convolutional Neural Network (CNN) using identical parameters:
+
+- **Same number of hidden neurons**
+- **Same activation functions**
+- **Same optimizer and learning rate**
+- **Same loss function**
+- **Same evaluation metrics**
+- **Same training duration (number of epochs)**
+- **Same training and validation data**
+
+### Code for a Basic Neural Network
+
+```python
+import tensorflow as tf
+#Set the random seed
+tf.random.set_seed(42)
+
+#1. Build the model
+model_1 = tf.keras.Sequential([
+    tf.keras.layers.Flatten(input_shape =(224,224,3)),
+    tf.keras.layers.Dense(4, activation = "relu"),
+    tf.keras.layers.Dense(4,activation = "relu"),
+    tf.keras.layers.Dense(1,activation = "sigmoid")
+])
+
+#2. Compile the model
+model_1.compile(
+    loss = tf.keras.losses.BinaryCrossentropy(),
+    optimizer = tf.keras.optimizers.Adam(),
+    metrics = ["accuracy"]
+)
+
+#3.Fit the model
+history_1 = model_2.fit(train_data,
+                        validation_data = valid_data,
+                        epochs = 5)
+```
+
+### Code for Convolutional neural network :
+
+```python
+model_1 = tf.keras.models.Sequential([
+    tf.keras.layers.Input(shape=(224, 224, 3)),  ##Pass this instead of writing input_shape()
+    tf.keras.layers.Conv2D(10, 3, activation="relu"),
+    tf.keras.layers.Conv2D(10, 3, activation="relu"),
+    tf.keras.layers.MaxPool2D(pool_size=2, padding="same"),
+    tf.keras.layers.Conv2D(10, 3, activation="relu"),
+    tf.keras.layers.Conv2D(10, 3, activation="relu"),
+    tf.keras.layers.MaxPool2D(2),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(1, activation="sigmoid")
+])
+
+#2. Compile the model
+model_1.compile(
+    loss = "binary_crossentropy",
+    optimizer = tf.keras.optimizers.Adam(),
+    metrics= ["accuracy"])
+
+#3. Fit the model
+history_1 = model_1.fit(train_data,
+                        epochs = 5,
+                        validation_data  = valid_data)
+
+```
+
+## Now let's take a look at the number of trainable params for each of these:
+
+### Model summary for a regular Neural Network model :
+Model: "sequential_2"
+ - Total params: 1,806,425 
+ - **Trainable params: 602,141**
+ - Non-trainable params: 0 
+ - Optimizer params: 1,204,284 
+ - Accuracy: 0.5126
+ 
+### Model summary for Convolutional Neural Network model :
+
+ - Total params: 93,305 
+ - **Trainable params: 31,101**
+ - Non-trainable params: 0 
+ - Optimizer params: 62,204 
+ - Accuracy: 0.8102
+
+The above are sample model summaries for an image dataset model made using VGG Architecture.
+Just take a look at the number of trainable param from the above data and we'll see what we can infer from them.
+
+
+## What we infer?
+
+In general, having more trainable parameters suggests that a model might perform better. However, in this case, the CNN achieves higher accuracy despite having fewer trainable parameters than the basic neural network. 
+This is because CNNs have properties that allow them to provide higher accuracy, especially in tasks involving images. One of the key reasons is that CNNs can capture more **local relationships** in the data.
+This is crucial for image data, where features like edges, textures, and shapes are key to understanding the overall content of the image.
+
+- > **Conv2D** says, I will get you all the patterns of the data.These layers act as pattern detectors, scanning the image for features that are important for classification.
+- > **MaxPool2D** says, from all the available data patterns, I will get you the important ones.They reduce the spatial dimensions of the data, focusing on the most relevant features,
+ thereby enhancing the model’s ability to generalize.
+
+For example, if you're working on an image dataset to build a classifier for apples and mangoes, a neural network tends to learn the patterns in the images—the more, 
+the better—until it starts to memorize the data, leading to overfitting.
+
+On the other hand, a CNN observes the shapes and colors in the images. It learns that a fruit with a certain shape and shades of red is likely to be an apple. This leads us to another conclusion:
+
+> CNNs are more likely to avoid overfitting of the data.
+
+When you close one of your eye, you see the window in front of you slightly shifted.
+But when the machine sees the apple in a position elsewhere (maybe at a distance or on a tree in the image),
+it fails to recognize it .
+
+This is called translation invariance.A major advantage of CNNs is their ability to maintain translation invariance.
+This means that they can recognize objects even if they appear in different locations within the image.
+For example, whether an apple is in the center or the corner of an image, a CNN can still identify it correctly, whereas a traditional neural network might struggle.
+
+> Due to the nature of convolutional layers and pooling operations, CNNs can recognize objects regardless of their position in the image.
+
+## Conclusion
+Convolutional Neural Networks (CNNs) are powerful tools that outperform traditional neural networks, particularly when dealing with image data.
+Their ability to capture local patterns, efficiency in terms of parameters, translation invariance, and robustness to overfitting make them the preferred choice for most computer vision tasks.
+
+## Resources 
+1. [What are CNNs?](https://www.ibm.com/topics/convolutional-neural-networks)
+2. [Overfitting and Underfitting in Machine Learning](https://www.simplilearn.com/tutorials/machine-learning-tutorial/overfitting-and-underfitting)
+3. [Translation Invariance](https://towardsdatascience.com/neural-networks-intuitions-8-translation-invariance-in-object-detectors-21db6e27879c)
+
