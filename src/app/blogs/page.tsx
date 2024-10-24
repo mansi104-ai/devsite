@@ -6,7 +6,7 @@ import Head from "next/head";
 export const metadata = {
   title: "Blog",
   description: "My thoughts on software development, life, and more.",
-  ogImage: "/path/to/your-default-og-image.jpg", // Add a default OG image here
+  ogImage: "public/responsible_ai.png", // Add a default OG image here
 };
 
 const BLUR_FADE_DELAY = 0.05;
