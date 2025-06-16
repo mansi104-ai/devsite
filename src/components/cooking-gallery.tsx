@@ -210,7 +210,7 @@ export default function CookingGallery() {
             <p className="text-muted-foreground">Cooking with passion, sharing with love</p>
           </div>
           <p className="text-sm text-muted-foreground mb-4">
-            "The secret ingredient is always love... and maybe a little extra butter."
+            `&apos;`The secret ingredient is always love... and maybe a little extra butter.`&apos;`
           </p>
           <Button className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-lg">
             Share Your Recipe

@@ -64,7 +64,7 @@ export default function Page() {
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
               <ChefHat className="size-4 text-orange-500" />
               <span>
-                When I'm not training models, I'm experimenting in the kitchen. Check out my culinary adventures!
+                When I am not training models, I am experimenting in the kitchen. Check out my culinary adventures!
               </span>
             </div>
             <Button
@@ -186,7 +186,7 @@ export default function Page() {
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">I like building things</h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Over the past 3+ years, I've participated in numerous hackathons. These events bring together talented
+                  Over the past 3+ years, I have participated in numerous hackathons. These events bring together talented
                   individuals to create innovative solutions in just a few days, showcasing the power of collaboration
                   and creativity.
                 </p>
