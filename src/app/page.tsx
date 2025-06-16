@@ -1,15 +1,17 @@
-import { HackathonCard } from "@/components/hackathon-card";
-import BlurFade from "@/components/magicui/blur-fade";
-import BlurFadeText from "@/components/magicui/blur-fade-text";
-import { ProjectCard } from "@/components/project-card";
-import { ResumeCard } from "@/components/resume-card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { DATA } from "@/data/resume";
-import Link from "next/link";
-import Markdown from "react-markdown";
+import { HackathonCard } from "@/components/hackathon-card"
+import BlurFade from "@/components/magicui/blur-fade"
+import BlurFadeText from "@/components/magicui/blur-fade-text"
+import { ProjectCard } from "@/components/project-card"
+import { ResumeCard } from "@/components/resume-card"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { DATA } from "@/data/resume"
+import Link from "next/link"
+import Markdown from "react-markdown"
+import { ChefHat, ExternalLink } from "lucide-react"
 
-const BLUR_FADE_DELAY = 0.04;
+const BLUR_FADE_DELAY = 0.04
 
 export default function Page() {
   return (
@@ -24,21 +26,18 @@ export default function Page() {
                 yOffset={8}
                 text={`Hi, I'm ${DATA.name.split(" ")[0]} 👋`}
               />
-              <BlurFadeText
-                className="max-w-[600px] md:text-xl"
-                delay={BLUR_FADE_DELAY}
-                text={DATA.description}
-              />
+              <BlurFadeText className="max-w-[600px] md:text-xl" delay={BLUR_FADE_DELAY} text={DATA.description} />
             </div>
             <BlurFade delay={BLUR_FADE_DELAY}>
               <Avatar className="size-28 border">
-                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
+                <AvatarImage alt={DATA.name} src={DATA.avatarUrl || "/placeholder.svg"} />
                 <AvatarFallback>{DATA.initials}</AvatarFallback>
               </Avatar>
             </BlurFade>
           </div>
         </div>
       </section>
+
       <section id="about">
         <BlurFade delay={BLUR_FADE_DELAY * 3}>
           <h2 className="text-xl font-bold">About</h2>
@@ -49,16 +48,46 @@ export default function Page() {
           </Markdown>
         </BlurFade>
       </section>
+
+      {/* NEW: Kitchen Gallery Preview Section */}
+      <section id="gallery-preview">
+        <div className="flex min-h-0 flex-col gap-y-3">
+          <BlurFade delay={BLUR_FADE_DELAY * 4.5}>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold">Beyond Code</h2>
+              <Link href="/gallery" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                View Gallery →
+              </Link>
+            </div>
+          </BlurFade>
+          <BlurFade delay={BLUR_FADE_DELAY * 4.7}>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+              <ChefHat className="size-4 text-orange-500" />
+              <span>
+                When I'm not training models, I'm experimenting in the kitchen. Check out my culinary adventures!
+              </span>
+            </div>
+            <Button
+              asChild
+              className="w-fit bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+            >
+              <Link href="/gallery">
+                <ChefHat className="size-4 mr-2" />
+                Explore Kitchen Chronicles
+                <ExternalLink className="size-4 ml-2" />
+              </Link>
+            </Button>
+          </BlurFade>
+        </div>
+      </section>
+
       <section id="work">
         <div className="flex min-h-0 flex-col gap-y-3">
           <BlurFade delay={BLUR_FADE_DELAY * 5}>
             <h2 className="text-xl font-bold">Work Experience</h2>
           </BlurFade>
           {DATA.work.map((work, id) => (
-            <BlurFade
-              key={work.company}
-              delay={BLUR_FADE_DELAY * 6 + id * 0.05}
-            >
+            <BlurFade key={work.company} delay={BLUR_FADE_DELAY * 6 + id * 0.05}>
               <ResumeCard
                 key={work.company}
                 logoUrl={work.logoUrl}
@@ -74,16 +103,14 @@ export default function Page() {
           ))}
         </div>
       </section>
+
       <section id="education">
         <div className="flex min-h-0 flex-col gap-y-3">
           <BlurFade delay={BLUR_FADE_DELAY * 7}>
             <h2 className="text-xl font-bold">Education</h2>
           </BlurFade>
           {DATA.education.map((education, id) => (
-            <BlurFade
-              key={education.school}
-              delay={BLUR_FADE_DELAY * 8 + id * 0.05}
-            >
+            <BlurFade key={education.school} delay={BLUR_FADE_DELAY * 8 + id * 0.05}>
               <ResumeCard
                 key={education.school}
                 href={education.href}
@@ -97,6 +124,7 @@ export default function Page() {
           ))}
         </div>
       </section>
+
       <section id="skills">
         <div className="flex min-h-0 flex-col gap-y-3">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
@@ -111,6 +139,7 @@ export default function Page() {
           </div>
         </div>
       </section>
+
       <section id="projects">
         <div className="space-y-12 w-full py-12">
           <BlurFade delay={BLUR_FADE_DELAY * 11}>
@@ -119,22 +148,17 @@ export default function Page() {
                 <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                   Making Intelligence
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Check out my latest work
-                </h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Check out my latest work</h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  I&apos;ve worked on a variety of projects, from simple
-                  digit recognition to make full-fledge text-extractor, superseding libraries like OCR engines.
+                  I&apos;ve worked on a variety of projects, from simple digit recognition to make full-fledge
+                  text-extractor, superseding libraries like OCR engines.
                 </p>
               </div>
             </div>
           </BlurFade>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 max-w-[800px] mx-auto">
             {DATA.projects.map((project, id) => (
-              <BlurFade
-                key={project.title}
-                delay={BLUR_FADE_DELAY * 12 + id * 0.05}
-              >
+              <BlurFade key={project.title} delay={BLUR_FADE_DELAY * 12 + id * 0.05}>
                 <ProjectCard
                   href={project.href}
                   key={project.title}
@@ -151,6 +175,7 @@ export default function Page() {
           </div>
         </div>
       </section>
+
       <section id="hackathons">
         <div className="space-y-12 w-full py-12">
           <BlurFade delay={BLUR_FADE_DELAY * 13}>
@@ -159,14 +184,11 @@ export default function Page() {
                 <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
                   Hackathons
                 </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  I like building things
-                </h2>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">I like building things</h2>
                 <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Over the past 3+ years, I’ve participated in numerous
-                  hackathons. These events bring together talented individuals
-                  to create innovative solutions in just a few days, showcasing
-                  the power of collaboration and creativity.
+                  Over the past 3+ years, I've participated in numerous hackathons. These events bring together talented
+                  individuals to create innovative solutions in just a few days, showcasing the power of collaboration
+                  and creativity.
                 </p>
               </div>
             </div>
@@ -174,10 +196,7 @@ export default function Page() {
           <BlurFade delay={BLUR_FADE_DELAY * 14}>
             <ul className="mb-4 ml-4 divide-y divide-dashed border-l">
               {DATA.hackathons.map((project, id) => (
-                <BlurFade
-                  key={project.title + project.dates}
-                  delay={BLUR_FADE_DELAY * 15 + id * 0.05}
-                >
+                <BlurFade key={project.title + project.dates} delay={BLUR_FADE_DELAY * 15 + id * 0.05}>
                   <HackathonCard
                     title={project.title}
                     description={project.description}
@@ -192,31 +211,24 @@ export default function Page() {
           </BlurFade>
         </div>
       </section>
+
       <section id="contact">
         <div className="grid items-center justify-center gap-4 px-4 text-center md:px-6 w-full py-12">
           <BlurFade delay={BLUR_FADE_DELAY * 16}>
             <div className="space-y-3">
-              <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">
-                Contact
-              </div>
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                Get in Touch
-              </h2>
+              <div className="inline-block rounded-lg bg-foreground text-background px-3 py-1 text-sm">Contact</div>
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Get in Touch</h2>
               <p className="mx-auto max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Want to chat? Just shoot me a dm{" "}
-                <Link
-                  href={DATA.contact.social.X.url}
-                  className="text-blue-500 hover:underline"
-                >
+                <Link href={DATA.contact.social.X.url} className="text-blue-500 hover:underline">
                   with a direct question on twitter
                 </Link>{" "}
-                and I&apos;ll respond whenever I can. I will ignore all
-                soliciting.
+                and I&apos;ll respond whenever I can. I will ignore all soliciting.
               </p>
             </div>
           </BlurFade>
         </div>
       </section>
     </main>
-  );
+  )
 }
