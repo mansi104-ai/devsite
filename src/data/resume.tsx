@@ -113,8 +113,8 @@ export const DATA = {
       logoUrl: "/codess.jpg",
       start: "Jan 2025",
       end: "Apr 2025",
-      // description:
-      //   "Learnt the complete stack of MLOps pipeline , along with essential AI skills like computer vision , image processing , ML , everything in an optimized manner at production level.",
+      description:
+        "Learnt the complete stack of MLOps pipeline , along with essential AI skills like computer vision , image processing , ML , everything in an optimized manner at production level.",
     },
     {
       company: "Quillbook",
