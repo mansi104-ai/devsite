@@ -68,6 +68,55 @@ export const DATA = {
 
   work: [
     {
+      company: "Platy Studio",
+      href: "https://platy.studio/",
+      badges: [],
+      location: "Remote",
+      title: "Product & Sales (Freelance)",
+      logoUrl: "/platy-studio.jpg",
+      start: "June 2025",
+      end: "Ongoing",
+      description:
+        "Managing the dubbing and karaoke product and sales of the startup in order to enhance the product quality , sales and optimization.",
+    },
+    {
+      company: "Arsana Labs ",
+      href: "https://arsanalabs.com/",
+      badges: [],
+      location: "Building",
+      title: "Building",
+      logoUrl: "/arsana.jpg",
+      start: "Nov 2024",
+      end: "Ongoing",
+      description:
+        "Complete development and management of arsana labs , a tool meant to serve both consulting and open-source spaces.",
+    },
+    
+    {
+      company: "Agnext Technologies",
+      href: "https://agnext.com/",
+      badges: [],
+      location: "On-site",
+      title: "Machine Learning & Software Intern",
+      logoUrl: "/agnext.jpg",
+      start: "Jan 2025",
+      end: "June 2025",
+      description:
+        "Learnt the complete stack of MLOps pipeline , along with essential AI skills like computer vision , image processing , ML , everything in an optimized manner at production level.",
+    },
+    {
+      company: "Codess.Cafe",
+      href: "https://codess.cafe/",
+      badges: [],
+      location: "Remote",
+      title: "Mentee",
+      logoUrl: "/codess.jpg",
+      start: "Jan 2025",
+      end: "Apr 2025",
+      // description:
+      //   "Learnt the complete stack of MLOps pipeline , along with essential AI skills like computer vision , image processing , ML , everything in an optimized manner at production level.",
+    },
+    {
       company: "Quillbook",
       href: "https://play.google.com/store/apps/details?id=com.quillbook&hl=en",
       badges: [],
