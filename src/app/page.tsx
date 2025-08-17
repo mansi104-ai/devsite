@@ -49,37 +49,7 @@ export default function Page() {
         </BlurFade>
       </section>
 
-      {/* NEW: Kitchen Gallery Preview Section */}
-      <section id="gallery-preview">
-        <div className="flex min-h-0 flex-col gap-y-3">
-          <BlurFade delay={BLUR_FADE_DELAY * 4.5}>
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold">Beyond Code</h2>
-              <Link href="/gallery" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                View Gallery →
-              </Link>
-            </div>
-          </BlurFade>
-          <BlurFade delay={BLUR_FADE_DELAY * 4.7}>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-              <ChefHat className="size-4 text-orange-500" />
-              <span>
-                When I am not training models, I am experimenting in the kitchen. Check out my culinary adventures!
-              </span>
-            </div>
-            <Button
-              asChild
-              className="w-fit bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
-            >
-              <Link href="/gallery">
-                <ChefHat className="size-4 mr-2" />
-                Explore Kitchen Chronicles
-                <ExternalLink className="size-4 ml-2" />
-              </Link>
-            </Button>
-          </BlurFade>
-        </div>
-      </section>
+      
 
       <section id="work">
         <div className="flex min-h-0 flex-col gap-y-3">
@@ -175,7 +145,38 @@ export default function Page() {
           </div>
         </div>
       </section>
-
+      {/* NEW: Kitchen Gallery Preview Section */}
+      <section id="gallery-preview">
+        <div className="flex min-h-0 flex-col gap-y-3">
+          <BlurFade delay={BLUR_FADE_DELAY * 4.5}>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-bold">Beyond Code</h2>
+              <Link href="/gallery" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                View Gallery →
+              </Link>
+            </div>
+          </BlurFade>
+          <BlurFade delay={BLUR_FADE_DELAY * 4.7}>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+              <ChefHat className="size-4 text-orange-500" />
+              <span>
+                When I am not training models, I am experimenting in the kitchen. Check out my culinary adventures!
+              </span>
+            </div>
+            <Button
+              asChild
+              className="w-fit bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white"
+            >
+              <Link href="/gallery">
+                <ChefHat className="size-4 mr-2" />
+                Explore Kitchen Chronicles
+                <ExternalLink className="size-4 ml-2" />
+              </Link>
+            </Button>
+          </BlurFade>
+        </div>
+      </section>
+      
       <section id="hackathons">
         <div className="space-y-12 w-full py-12">
           <BlurFade delay={BLUR_FADE_DELAY * 13}>
