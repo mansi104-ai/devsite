@@ -11,7 +11,7 @@ While both are powerful, they solve *fundamentally different* pattern-recognitio
 
 Choosing the wrong architecture slows learning, reduces accuracy, and wastes compute.
 
-This article — written with ML-professor intuition — explores:
+This article explores:
 
 - What CNNs and RNNs truly learn
 - Why RNNs require time-steps  
@@ -47,7 +47,6 @@ They operate on:
 A CNN sees:
 whole image → convolution → features → prediction
 
-
 It **does not care** about order or time.
 
 ---
@@ -72,7 +71,6 @@ x1 → h1 → y1
 x2 → h2 → y2
 ...
 
-
 Each hidden state depends on the previous one.
 
 ---
@@ -94,8 +92,7 @@ An RNN *is defined* by sequential dependence.
 
 ---
 
-## Why RNNs Struggle With Memory  
-Question:
+## Question:
 
 ### **“Why is recovering the entire input harder than generating output?”**
 
