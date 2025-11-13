@@ -1,0 +1,182 @@
+---
+title: "CNNs vs RNNs: When to Use What? A Practical & Intuitive Guide for ML Engineers"
+publishedAt: "2025-11-14"
+summary: "Understand the core differences between CNNs and RNNs, when each architecture should be used, and how to choose the right model for tasks like medical imaging, time-series analysis, NLP, and more."
+---
+
+## Introduction  
+
+In deep learning, two of the most widely used architectures are **Convolutional Neural Networks (CNNs)** and **Recurrent Neural Networks (RNNs)**.  
+While both are powerful, they solve *fundamentally different* pattern-recognition problems.
+
+Choosing the wrong architecture slows learning, reduces accuracy, and wastes compute.
+
+This article — written with ML-professor intuition — explores:
+
+- What CNNs and RNNs truly learn
+- Why RNNs require time-steps  
+- Why RNNs struggle with long-term memory  
+- When CNNs outperform RNNs  
+- When RNNs are the only correct choice  
+- 2D medical imaging example
+- Mini code snippets in PyTorch  
+- Architecture selection checklist  
+
+Let's begin.
+
+---
+
+## CNNs vs RNNs — The Core Idea
+
+### CNNs learn **spatial** patterns  
+CNNs understand:
+- Edges  
+- Textures  
+- Shapes  
+- Local neighborhoods  
+- 2D/3D structures  
+
+They operate on:
+
+- Images  
+- Medical scans (CT, MRI, X-Ray)  
+- Spectrograms  
+- Video frames  
+- Spatial grids  
+
+A CNN sees:
+whole image → convolution → features → prediction
+
+
+It **does not care** about order or time.
+
+---
+
+### RNNs learn **temporal** patterns  
+RNNs understand:
+- Sequences  
+- Order  
+- Context over time  
+
+They operate on:
+- Natural language  
+- Speech  
+- Time-series  
+- DNA  
+- Sequential medical signals  
+- Ordered tokens  
+
+An RNN processes data like:
+
+x1 → h1 → y1
+x2 → h2 → y2
+...
+
+
+Each hidden state depends on the previous one.
+
+---
+
+## Question:  
+### **“Why do RNNs need time steps?”**
+
+Because the hidden-state equation is:
+
+\[
+h_t = f(h_{t-1}, x_t)
+\]
+
+**cannot compute \(h_3\)** without \(h_2\),  
+and **cannot compute \(h_2\)** without \(h_1\).
+
+A CNN sees all data at once.  
+An RNN *is defined* by sequential dependence.
+
+---
+
+## Why RNNs Struggle With Memory  
+Question:
+
+### **“Why is recovering the entire input harder than generating output?”**
+
+Because RNNs compress information from many steps into a **fixed-size** vector.  
+This creates a massive **information bottleneck**.
+
+Example:
+
+100 tokens → 1 hidden state (size 128)
+
+
+The network must:
+- store context  
+- keep semantics  
+- avoid forgetting  
+- and still produce predictions  
+
+This is why RNNs suffer from **vanishing gradients**.
+
+But generating outputs is easier — the RNN only stores the **useful summary**, not the full sequence.
+
+---
+
+## Why CNNs Don’t Need Memory  
+CNNs operate on spatial structure, not time.  
+They don’t have hidden states.  
+
+This makes them:
+- Parallelizable  
+- Fast  
+- Ideal for images  
+- Bad for sequences  
+
+---
+
+## Real Example: CNN or RNN for Medical Brain MRI?
+
+Question:
+
+### **“I have 60k 2D MRI images for meningioma segmentation and classification. Should I use CNNs or RNNs?”**
+
+### **Answer: CNNs — always.**
+
+Reasons:
+
+- Images are **spatial**, not sequential  
+- No temporal order exists  
+- Tumor boundaries and textures need 2D filters  
+- Segmentation is pixel-wise → **U-Net**  
+- RNNs would artificially force temporal structure that doesn't exist  
+
+### Recommended architectures:
+- **U-Net / U-Net++** for segmentation  
+- **ResNet / EfficientNet** for classification  
+
+Mini example:
+
+```python
+import segmentation_models_pytorch as smp
+
+model = smp.Unet(
+    encoder_name="resnet34",
+    encoder_weights="imagenet",
+    in_channels=1,
+    classes=1,
+)
+```
+
+100 tokens → 1 hidden state (size 128)
+
+This is dramatically better than any RNN-based attempt.
+
+## Checklist: CNN vs RNN
+
+### Use CNN when:
+- Input is spatial  
+- You need segmentation  
+- You want fast training  
+- There is no inherent sequence  
+
+### Use RNN when:
+- Input is temporal  
+- Order matters  
+- You need context across time  
