@@ -1,0 +1,241 @@
+---
+title: "Fine-Tuning an RNN Model Built From Scratch — Fully Customizable Sequence Learning"
+publishedAt: "2025-02-12"
+summary: "After understanding CNNs vs RNNs, this guide walks you through using and customizing a pure NumPy RNN implementation—from forward pass to BPTT, activations, sequence modeling, and fine-tuning."
+---
+
+## Introduction
+
+In the **previous blog**, we explored the deep differences between **CNNs and RNNs**, when to use each, and why sequence modeling requires explicit temporal processing.  
+If you haven’t read it yet, it sets the perfect conceptual foundation:
+
+👉 **CNNs vs RNNs Blog:**  
+https://mansikalra.vercel.app/blogs/cnns_vs_rnns
+
+In this follow-up guide, we go one step deeper.
+
+Today, we will see:
+
+- A **Recurrent Neural Network implemented from scratch**  
+- Entirely using **NumPy**  
+- With full support for:  
+  - forward sequence processing  
+  - hidden state updates  
+  - backpropagation through time (BPTT)  
+  - loss functions  
+  - training and evaluation  
+- And how **you** can fine-tune, modify, or extend the RNN for your own custom tasks.
+
+This is not a framework-dependent model — **you own every parameter**.  
+Perfect for learning, research, experimentation, and portfolio work.
+
+Repo link:  
+👉 **https://github.com/mansi104-ai/100_days_ml_code/tree/main/RNNs**
+
+---
+
+## Why Build an RNN From Scratch?
+
+Modern ML frameworks hide implementation details.  
+While this is great for productivity, it reduces transparency.
+
+By building the RNN manually, you gain:
+
+- Full control over internal computations  
+- The ability to modify the architecture freely  
+- Understanding of hidden-state evolution  
+- Understanding of **vanishing gradients** and BPTT  
+- Freedom to add custom gates, losses, activations  
+- The foundation to build GRUs, LSTMs, and Transformers  
+
+This scratch implementation is intentionally modular, so you can plug in your own logic anywhere.
+
+---
+
+## Project Overview
+
+The repository provides a clean modular structure:
+```
+RNNs/
+│
+├── activations.py
+├── rnn_cell.py
+├── rnn_model.py
+├── train_utils.py
+├── main.py
+└── README.md
+```
+
+
+Each file controls **one responsibility**—just like a real deep learning framework.
+
+Let’s walk through how you can fine-tune each part.
+
+---
+
+## 1. Customizing the Activation Function
+
+You can add or modify activations freely in `activations.py`.
+
+Already included:
+
+- tanh  
+- dtanh  
+- swish  
+- dswish  
+
+To switch activation globally, simply pass it into your sequence runner:
+
+<CodeBlock language="python">
+{`
+from activations import swish, dswish
+params, loss = train_rnn(
+    X_train,
+    Y_train,
+    params,
+    activation = swish,
+    activation_derivative = dswish,
+    epochs=30
+)
+`}
+</CodeBlock>
+
+### Why change activations?
+
+- **tanh** → classic RNN behavior  
+- **swish** → smoother gradient flow  
+- **ReLU-like activations** → high-variance signals  
+- **Custom gate functions** → build GRUs/LSTMs manually  
+
+---
+
+## 2. Customizing the RNN Cell
+
+`rnn_cell.py` is where **one timestep** is computed.
+
+You can modify:
+
+- weight initializations  
+- hidden state update rules  
+- add gates  
+- inject dropout  
+- add normalization  
+
+Example — adding a bias scaling:
+
+<CodeBlock language="python">
+{`
+a_t = Wxh @ x_t + Whh @ h_prev + 0.5 * bh
+h_t = activation(a_t)
+`}
+</CodeBlock>
+
+Want to build LSTM gates?
+
+You can add:
+
+```python
+f = sigmoid(Wf_x @ x + Wf_h @ h_prev)
+i = sigmoid(Wi_x @ x + Wi_h @ h_prev)
+o = sigmoid(Wo_x @ x + Wo_h @ h_prev)
+```
+Your RNN cell is fully hackable.
+3. Customizing Sequence Processing
+`rnn_model.py` controls:
+* unrolling the RNN through time
+* sequence-to-sequence outputs
+* sequence-to-one outputs
+* storing caches for BPTT
+* cross-entropy or MSE loss
+You can fine-tune:
+Sequence Length (T)
+Just pass a longer or shorter input:
+```
+seq = np.random.randn(10, input_dim)  # T=10
+```
+
+Return full sequence or final output only
+Just use:
+```
+outputs[-1]       # for sequence classification
+outputs           # for seq-to-seq tasks
+```
+
+Change loss
+You can use:
+* `compute_loss_cross_entropy`
+* `compute_loss_mse`
+* or write your own custom loss
+4. Customizing Training Behavior
+Inside `train_utils.py`, you can modify:
+- Learning rate
+- Gradient clipping threshold
+- Optimizer behavior
+- Epoch count
+- Batch handling
+For example, changing LR:
+```python
+params, losses = train_rnn(
+    X_train, Y_train, params,
+    activation=tanh,
+    activation_derivative=dtanh,
+    epochs=50,
+    lr=0.005
+)
+```
+Add momentum?
+You can easily implement:
+```
+v_Wxh = 0.9 * v_Wxh + lr * grads["dWxh"]
+params["Wxh"] -= v_Wxh
+```
+
+Your training loop is fully accessible.
+5. Custom Datasets
+`main.py` provides a toy dataset, but you can replace it easily.
+For time-series:
+```python
+X_train = [time_series[i:i+20] for i in range(0, len(data)-20)]
+```
+For NLP:
+* tokenize text
+* convert tokens to vectors
+* map sequence to labels
+The RNN will automatically unroll for whatever input size you provide.
+6. Example: Implementing a Custom Task
+Task: Predict if the sum of a sequence is positive or negative.
+```python
+seq = np.random.randn(5, 3)
+label = int(seq.sum() > 0)
+```
+This task is already included in `main.py`.
+You can customize:
+* sequence length
+* input dimension
+* number of classes
+* output activation
+7. Trying Your Own Architectures
+With this scratch setup, you can build:
+- Multi-layer RNN
+- Bidirectional RNN
+- GRU
+- LSTM
+- Attention mechanism
+- Encoder–Decoder RNN
+Simply extend the existing modular components.
+8. Repository Link
+All code is available here:
+👉 https://github.com/mansi104-ai/100_days_ml_code/tree/main/RNNs
+Feel free to clone, fork, or modify.
+Perfect for:
+* learning
+* experimentation
+* portfolio building
+* interviews
+* academic exploration
+Wrapping Up
+This blog continues from the conceptual foundation in:
+🧠 CNNs vs RNNs — Understanding Architecture Choice https://mansikalra.vercel.app/blogs/cnns_vs_rnns
+In this guide, you now have a fully customizable, fully transparent, and fully extensible RNN implementation that you control end-to-end.
+Whether you want to experiment with activation functions, new gating mechanisms, different losses, or your own datasets — this NumPy RNN gives you a complete foundation to explore sequence models deeply.
+Happy Experimenting! 🚀
